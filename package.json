@@ -1,7 +1,7 @@
 {
   "name": "dish-management-system",
   "version": "1.0.0",
-  "description": "菜品管理系统",
+  "description": "Dish Management System",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -18,7 +18,7 @@
   },
   "build": {
     "appId": "com.dishmanagement.app",
-    "productName": "菜品管理系统",
+    "productName": "DishManagementSystem",
     "directories": {
       "output": "dist"
     },
@@ -44,7 +44,8 @@
     },
     "publish": {
       "provider": "github",
-      "releaseType": "release"
+      "releaseType": "draft",
+      "token": "${{ secrets.GITHUB_TOKEN }}"
     }
   }
 } 
