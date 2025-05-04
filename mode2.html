@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜品管理系统 - 模式二</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">菜品管理系统</h1>
+        <div class="mode-selector">
+            <button id="mode1" onclick="window.location.href='mode1.html'">模式一</button>
+            <button id="mode2" class="active">模式二</button>
+        </div>
+        <div id="mode2-content" class="game-mode">
+            <div class="teams-container">
+                <div class="team-a">
+                    <h2>A队</h2>
+                    <div class="order-list">
+                        <h3>当前订单</h3>
+                        <ul id="mode2-team-a-orders"></ul>
+                    </div>
+                    <div class="score-pool">
+                        <h3>积分池</h3>
+                        <ul id="mode2-team-a-success"></ul>
+                    </div>
+                    <div class="penalty-pool">
+                        <h3>扣分池</h3>
+                        <ul id="mode2-team-a-fail"></ul>
+                    </div>
+                    <div class="total-profit">
+                        <h3>总积分</h3>
+                        <div id="mode2-team-a-profit">0分</div>
+                    </div>
+                </div>
+                <div class="order-pool">
+                    <h2>共享订单池</h2>
+                    <div id="shared-order-container"></div>
+                    <button id="serve-next-shared-btn">上菜</button>
+                </div>
+                <div class="team-b">
+                    <h2>B队</h2>
+                    <div class="order-list">
+                        <h3>当前订单</h3>
+                        <ul id="mode2-team-b-orders"></ul>
+                    </div>
+                    <div class="score-pool">
+                        <h3>积分池</h3>
+                        <ul id="mode2-team-b-success"></ul>
+                    </div>
+                    <div class="penalty-pool">
+                        <h3>扣分池</h3>
+                        <ul id="mode2-team-b-fail"></ul>
+                    </div>
+                    <div class="total-profit">
+                        <h3>总积分</h3>
+                        <div id="mode2-team-b-profit">0分</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

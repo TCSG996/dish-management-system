@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>独立运营模式 - 友尽厨房菜品管理系统</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- <div class="mode-selector">
+            <a href="index.html" class="back-button">返回主页</a>
+        </div> -->
+
+        <div class="game-area">
+            <div id="mode1-content" class="game-mode">
+                <div class="operation-area">
+                    <h2>运营区域</h2>
+                    <div class="operation-main-row">
+                        <div class="order-list">
+                            <h3>订单列表</h3>
+                            <ul id="operation-orders"></ul>
+                            <div id="operation-action-area"></div>
+                            <button id="serve-next-btn">上菜</button>
+                        </div>
+                        <div class="score-penalty-col">
+                            <div class="score-pool">
+                                <h3>积分池</h3>
+                                <ul id="operation-success"></ul>
+                            </div>
+                            <div class="penalty-pool">
+                                <h3>扣分池</h3>
+                                <ul id="operation-fail"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="current-order-modal" class="order-modal hidden">
+                        <div class="modal-content">
+                            <div id="current-order-detail"></div>
+                            <div id="timer-select-area"></div>
+                            <div id="cooking-area" class="hidden">
+                                <span id="order-timer" class="timer"></span>
+                                <button id="success-btn">成功</button>
+                                <button id="fail-btn">失败</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-summary">
+                        <div class="total-profit">
+                            <h3>总积分</h3>
+                            <div id="operation-profit">0分</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

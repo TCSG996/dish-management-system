@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友尽厨房菜品管理系统</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .main-container {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .mode-title {
+            font-size: 2.8em;
+            font-weight: 900;
+            color: #e74c3c;
+            letter-spacing: 4px;
+            margin-bottom: 60px;
+            text-shadow: 0 4px 18px #fffbe9cc;
+        }
+        .mode-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        .mode-button {
+            width: 280px;
+            height: 180px;
+            border: 3px solid #e74c3c;
+            border-radius: 24px;
+            background: #faf3e3;
+            color: #e74c3c;
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 12px 40px rgba(231,76,60,0.09);
+        }
+        .mode-button:hover {
+            transform: translateY(-5px);
+            background: #e74c3c;
+            color: #fff8dc;
+            box-shadow: 0 15px 50px rgba(231,76,60,0.15);
+        }
+        .mode-description {
+            font-size: 0.5em;
+            margin-top: 12px;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="mode-title">友尽厨房菜品管理系统</h1>
+        <div class="mode-buttons">
+            <a href="mode1.html" class="mode-button">
+                独立运营模式
+                <span class="mode-description">单人操作，按顺序处理订单</span>
+            </a>
+            <a href="mode2.html" class="mode-button">
+                抢单模式
+                <span class="mode-description">双人对抗，抢单比拼</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
