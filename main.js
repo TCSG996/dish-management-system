@@ -3,19 +3,22 @@ const path = require('path')
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 1600,
-    height: 900,
+    width: 1200,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
-    }
+    },
+    title: '友尽厨房菜品管理系统'
   })
 
   // 加载index.html
   win.loadFile('index.html')
   
-  // 开发时可以打开开发者工具
-  // win.webContents.openDevTools()
+  // 开发环境下打开开发者工具
+  if (process.env.NODE_ENV === 'development') {
+    win.webContents.openDevTools()
+  }
 }
 
 app.whenReady().then(() => {

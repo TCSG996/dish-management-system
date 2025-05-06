@@ -169,10 +169,9 @@ class Game {
 
     getOrderActionAreaHtml(orderKey, state, timeLeft) {
         if (state === 'select-timer') {
-            return `
-                <button class="timer-btn" data-minutes="2">2分钟</button>
-                <button class="timer-btn" data-minutes="3">3分钟</button>
-            `;
+            // Automatically start 3-minute timer
+            this.startOrderTimer(orderKey, 3);
+            return '';
         } else if (state === 'cooking') {
             const min = Math.floor(timeLeft / 60);
             const sec = timeLeft % 60;
@@ -316,75 +315,61 @@ class Game {
             this.visibleSharedOrders.forEach((order, idx) => {
                 const div = document.createElement('div');
                 div.className = 'order-item';
-                // 判断是否已选择倒计时
+                // 自动开始3分钟倒计时
                 if (!order._selectedTimer) {
-                    div.innerHTML = `
-                        <div class="order-main-row">
-                            <div class="order-header">
-                                <span class="order-no">#${order.orderNo}</span>
-                                <span class="order-name">${order.name}</span>
-                                <span class="order-price">${order.price}分</span>
-                            </div>
-                            <span class="order-ingredients">${order.ingredients.join(' ')}</span>
-                        </div>
-                        <div class="order-action-area">
-                            <button class="timer-btn" data-minutes="2" data-idx="${idx}">2分钟</button>
-                            <button class="timer-btn" data-minutes="3" data-idx="${idx}">3分钟</button>
-                        </div>
-                    `;
-                    div.querySelectorAll('.timer-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const minutes = parseInt(e.target.dataset.minutes);
-                            this.selectSharedOrderTimer(idx, minutes);
-                        });
-                    });
-                } else {
-                    // 已选倒计时，显示倒计时在上，分配按钮在下
-                    div.innerHTML = `
-                        <div class="order-main-row">
-                            <div class="order-header">
-                                <span class="order-no">#${order.orderNo}</span>
-                                <span class="order-name">${order.name}</span>
-                                <span class="order-price">${order.price}分</span>
-                            </div>
-                            <span class="order-ingredients">${order.ingredients.join(' ')}</span>
-                        </div>
-                        <div class="order-action-area vertical-action-area">
-                            <div class="timer-row" style="text-align:center; margin-bottom:10px;">
-                                <span class="timer">${Math.floor(order._timeLeft / 60)}:${(order._timeLeft % 60).toString().padStart(2, '0')}</span>
-                            </div>
-                            <div class="assign-row" style="display:flex; justify-content:center; gap:12px;">
-                                <button class="assign-btn" data-team="A" data-idx="${idx}">分配给A队</button>
-                                <button class="assign-btn" data-team="B" data-idx="${idx}">分配给B队</button>
-                            </div>
-                        </div>
-                    `;
-                    // 倒计时递减
-                    if (!order._timer) {
-                        order._timer = setInterval(() => {
-                            order._timeLeft--;
-                            if (order._timeLeft <= 0) {
-                                clearInterval(order._timer);
-                                order._timer = null;
-                                // 超时后自动移除
-                                this.visibleSharedOrders.splice(idx, 1);
-                                this.renderSharedOrdersMulti();
-                            } else {
-                                // 只刷新当前订单的倒计时
-                                const timerSpan = div.querySelector('.timer');
-                                if (timerSpan) timerSpan.textContent = `${Math.floor(order._timeLeft / 60)}:${(order._timeLeft % 60).toString().padStart(2, '0')}`;
-                            }
-                        }, 1000);
-                    }
-                    div.querySelectorAll('.assign-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const team = e.target.dataset.team;
-                            const orderIdx = parseInt(e.target.dataset.idx);
-                            if (order._timer) clearInterval(order._timer);
-                            this.assignOrderToTeamMulti(orderIdx, team);
-                        });
-                    });
+                    order._selectedTimer = true;
+                    order._timeLeft = 3 * 60;
+                    order._timer = null;
                 }
+                
+                // 显示倒计时和分配按钮
+                div.innerHTML = `
+                    <div class="order-main-row">
+                        <div class="order-header">
+                            <span class="order-no">#${order.orderNo}</span>
+                            <span class="order-name">${order.name}</span>
+                            <span class="order-price">${order.price}分</span>
+                        </div>
+                        <span class="order-ingredients">${order.ingredients.join(' ')}</span>
+                    </div>
+                    <div class="order-action-area vertical-action-area">
+                        <div class="timer-row" style="text-align:center; margin-bottom:10px;">
+                            <span class="timer">${Math.floor(order._timeLeft / 60)}:${(order._timeLeft % 60).toString().padStart(2, '0')}</span>
+                        </div>
+                        <div class="assign-row" style="display:flex; justify-content:center; gap:12px;">
+                            <button class="assign-btn" data-team="A" data-idx="${idx}">分配给A队</button>
+                            <button class="assign-btn" data-team="B" data-idx="${idx}">分配给B队</button>
+                        </div>
+                    </div>
+                `;
+                
+                // 倒计时递减
+                if (!order._timer) {
+                    order._timer = setInterval(() => {
+                        order._timeLeft--;
+                        if (order._timeLeft <= 0) {
+                            clearInterval(order._timer);
+                            order._timer = null;
+                            // 超时后自动移除
+                            this.visibleSharedOrders.splice(idx, 1);
+                            this.renderSharedOrdersMulti();
+                        } else {
+                            // 只刷新当前订单的倒计时
+                            const timerSpan = div.querySelector('.timer');
+                            if (timerSpan) timerSpan.textContent = `${Math.floor(order._timeLeft / 60)}:${(order._timeLeft % 60).toString().padStart(2, '0')}`;
+                        }
+                    }, 1000);
+                }
+                
+                div.querySelectorAll('.assign-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const team = e.target.dataset.team;
+                        const orderIdx = parseInt(e.target.dataset.idx);
+                        if (order._timer) clearInterval(order._timer);
+                        this.assignOrderToTeamMulti(orderIdx, team);
+                    });
+                });
+                
                 this.sharedOrderContainer.appendChild(div);
             });
         }
@@ -395,14 +380,6 @@ class Game {
             this.sharedOrderContainer.appendChild(tip);
             if (this.serveNextSharedBtn) this.serveNextSharedBtn.disabled = true;
         }
-    }
-
-    selectSharedOrderTimer(idx, minutes) {
-        const order = this.visibleSharedOrders[idx];
-        order._selectedTimer = true;
-        order._timeLeft = minutes * 60;
-        order._timer = null;
-        this.renderSharedOrdersMulti();
     }
 
     serveNextSharedOrder() {
